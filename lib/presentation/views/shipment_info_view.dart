@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movemate/presentation/widgets/widgets.dart';
 import 'package:movemate/utils/app_colors.dart';
 
 class ShipmentInfoView extends StatefulWidget {
@@ -8,7 +9,37 @@ class ShipmentInfoView extends StatefulWidget {
   State<ShipmentInfoView> createState() => _ShipmentInfoViewState();
 }
 
-class _ShipmentInfoViewState extends State<ShipmentInfoView> {
+class _ShipmentInfoViewState extends State<ShipmentInfoView>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late AnimationController _buttonAnimationController;
+  late Animation<double> _buttonAnimation;
+  final tween = Tween<double>(begin: 1.0, end: 0.8);
+
+  @override
+  void initState() {
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    _buttonAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 150));
+    _buttonAnimation = tween.animate(
+      CurvedAnimation(
+        parent: _buttonAnimationController,
+        curve: Curves.easeOut,
+      ),
+    );
+    // int _repeat = 0;
+    _buttonAnimationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _buttonAnimationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        // _buttonAnimationController.forward();
+      }
+    });
+    _animationController.forward();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,23 +49,38 @@ class _ShipmentInfoViewState extends State<ShipmentInfoView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("MoveMate"),
+              AppText.heading1("MoveMate"),
               const SizedBox(
                 height: 40,
               ),
-              Container(
-                height: 100,
-                width: 100,
-                color: Colors.blue,
+              AnimatedBuilder(
+                animation: _animationController,
+                builder: (context, child) {
+                  return Transform.scale(
+                    alignment: Alignment.center,
+                    scale: (1.3 * _animationController.value),
+                    child: Opacity(
+                      opacity: _animationController.value,
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  );
+                },
               ),
               const SizedBox(
-                height: 30,
+                height: 50,
               ),
-              const Text("Total Estimated Amount"),
+              AppText.heading4("Total Estimated Amount"),
               const SizedBox(
                 height: 15,
               ),
-              const Text("N500,000.00"),
+              AppText.heading4(
+                "N500,000.00",
+                color: AppColors.primaryLightGreenColor,
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -47,22 +93,30 @@ class _ShipmentInfoViewState extends State<ShipmentInfoView> {
               const SizedBox(
                 height: 40,
               ),
-              SizedBox(
-                height: 54,
-                width: MediaQuery.of(context).size.width,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryOrangeColor,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
+              ScaleTransition(
+                scale: _buttonAnimation,
+                child: SizedBox(
+                  height: 54,
+                  width: MediaQuery.of(context).size.width,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      backgroundColor: AppColors.primaryOrangeColor,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
                       ),
                     ),
+                    onPressed: () {
+                      print("Heyyy");
+                      _buttonAnimationController.forward();
+                    },
+                    child: AppText.button(
+                      "Back to home",
+                      color: Colors.white,
+                    ),
                   ),
-                  onPressed: () {
-                    print("Heyyy");
-                  },
-                  child: const Text("Back to home"),
                 ),
               )
             ],

@@ -15,17 +15,19 @@ class SearchBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 52,
+      alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
-          Radius.circular(20),
+          Radius.circular(30),
         ),
       ),
       child: TextField(
         controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(
+          helperText: "Enter the receipt number ...",
           prefixIcon: const Icon(Icons.search),
           suffixIcon: Container(
             // height: 28,
@@ -40,9 +42,9 @@ class SearchBarWidget extends StatelessWidget {
           ),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.only(
-            left: 15,
-            top: 14,
-          ),
+              // left: 15,
+              // top: 14,
+              ),
         ),
       ),
     );
