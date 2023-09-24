@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movemate/presentation/widgets/widgets.dart';
-import 'package:movemate/utils/app_colors.dart';
+import 'package:movemate/utils/utils.dart';
 
 class ShipmentInfoView extends StatefulWidget {
   const ShipmentInfoView({super.key});
@@ -12,30 +12,58 @@ class ShipmentInfoView extends StatefulWidget {
 class _ShipmentInfoViewState extends State<ShipmentInfoView>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
-  late AnimationController _buttonAnimationController;
+
+  late Animation<double> _titleAnimation;
+  late Animation<double> _amountAnimation;
+  late Animation<double> _descriptionAnimation;
   late Animation<double> _buttonAnimation;
   final tween = Tween<double>(begin: 1.0, end: 0.8);
 
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    _buttonAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 150));
-    _buttonAnimation = tween.animate(
+        AnimationController(vsync: this, duration: AppConfig.animationDuration);
+
+    _titleAnimation = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: _buttonAnimationController,
-        curve: Curves.easeOut,
+        parent: _animationController,
+        curve: const Interval(
+          0,
+          0.2,
+          curve: Curves.easeIn,
+        ),
       ),
     );
-    // int _repeat = 0;
-    _buttonAnimationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _buttonAnimationController.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        // _buttonAnimationController.forward();
-      }
-    });
+    _amountAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0,
+          0.4,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
+    _descriptionAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0,
+          0.6,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
+    _buttonAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0,
+          0.8,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
     _animationController.forward();
     super.initState();
   }
@@ -58,7 +86,7 @@ class _ShipmentInfoViewState extends State<ShipmentInfoView>
                 builder: (context, child) {
                   return Transform.scale(
                     alignment: Alignment.center,
-                    scale: (1.3 * _animationController.value),
+                    scale: (1.5 * _animationController.value),
                     child: Opacity(
                       opacity: _animationController.value,
                       child: Container(
@@ -73,52 +101,79 @@ class _ShipmentInfoViewState extends State<ShipmentInfoView>
               const SizedBox(
                 height: 50,
               ),
-              AppText.heading4("Total Estimated Amount"),
+              // AppText.heading4("Total Estimated Amount"),
+              AnimatedBuilder(
+                  animation: _titleAnimation,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: Offset(0.0, 40 * (1 - _titleAnimation.value)),
+                      child: Opacity(
+                        opacity: _titleAnimation.value,
+                        child: AppText.heading2(
+                          "Total Estimated Amount",
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    );
+                  }),
               const SizedBox(
                 height: 15,
               ),
-              AppText.heading4(
-                "N500,000.00",
-                color: AppColors.primaryLightGreenColor,
-              ),
+              AnimatedBuilder(
+                  animation: _amountAnimation,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: Offset(0.0, 28 * (1 - _amountAnimation.value)),
+                      child: Opacity(
+                        opacity: _titleAnimation.value,
+                        child: AppText.heading3(
+                          "\$500,000.00",
+                          color: Colors.greenAccent,
+                        ),
+                      ),
+                    );
+                  }),
+
               const SizedBox(
                 height: 10,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                child: Text(
-                  "Nostrud nulla in non voluptate labore laboris reprehend",
-                ),
-              ),
+              AnimatedBuilder(
+                  animation: _descriptionAnimation,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset:
+                          Offset(0.0, 20 * (1 - _descriptionAnimation.value)),
+                      child: Opacity(
+                        opacity: _titleAnimation.value,
+                        child: AppText.medium(
+                          "Nostrud nulla in non voluptate labore laboris reprehend",
+                        ),
+                      ),
+                    );
+                  }),
+
               const SizedBox(
                 height: 40,
               ),
-              ScaleTransition(
-                scale: _buttonAnimation,
-                child: SizedBox(
-                  height: 54,
-                  width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: AppColors.primaryOrangeColor,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
+              AnimatedBuilder(
+                  animation: _buttonAnimation,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: Offset(
+                        0.0,
+                        10 * (1 - _buttonAnimation.value),
                       ),
-                    ),
-                    onPressed: () {
-                      print("Heyyy");
-                      _buttonAnimationController.forward();
-                    },
-                    child: AppText.button(
-                      "Back to home",
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              )
+                      child: Opacity(
+                          opacity: _titleAnimation.value,
+                          child: AppButton(
+                            title: "Back to home",
+                            onPressed: () {
+                              print("Hellloooo");
+                              Navigator.pop(context);
+                            },
+                          )),
+                    );
+                  }),
             ],
           ),
         ),

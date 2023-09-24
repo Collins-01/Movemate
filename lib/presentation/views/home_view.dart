@@ -305,6 +305,7 @@ class _HomeViewState extends State<HomeView>
             // Positioned(child: )
           ],
         ),
+        // bottomNavigationBar: const BottomNav(activeIndex: 0),
       ),
     );
   }

@@ -34,7 +34,8 @@ class _SearchViewState extends State<SearchView> {
       child: Scaffold(
         backgroundColor: const Color(0xfff5f5f5),
         appBar: AppBar(
-          toolbarHeight: 110,
+          backgroundColor: AppColors.primaryColor,
+          toolbarHeight: 80,
           bottom: const PreferredSize(
             preferredSize: Size.fromHeight(10),
             child: SizedBox(),
@@ -52,15 +53,50 @@ class _SearchViewState extends State<SearchView> {
                 Radius.circular(30),
               ),
             ),
+            child: TextField(
+              onChanged: (value) => _handleSearchBarChanged(value),
+              decoration: InputDecoration(
+                suffixIconConstraints: const BoxConstraints(
+                  maxHeight: 40,
+                  maxWidth: 40,
+                ),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: Container(
+                    // height: 26,
+                    // width: 26,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primaryOrangeColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.qr_code_scanner_outlined,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                ),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: AppColors.primaryColor,
+                ),
+                contentPadding: const EdgeInsets.only(left: 20, top: 17),
+                border: InputBorder.none,
+              ),
+            ),
           ),
         ),
-        body: AnimatedList(
-          key: _listKey,
-          initialItemCount: 0,
-          itemBuilder:
-              (BuildContext context, int index, Animation<double> animation) {
-            return _buildItem(_list[index].toString(), animation);
-          },
+        body: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: AnimatedList(
+            key: _listKey,
+            initialItemCount: 0,
+            itemBuilder:
+                (BuildContext context, int index, Animation<double> animation) {
+              return _buildItem(_list[index].toString(), animation);
+            },
+          ),
         ),
       ),
     );
