@@ -10,7 +10,42 @@ class CalculateView extends StatefulWidget {
   State<CalculateView> createState() => _CalculateViewState();
 }
 
-class _CalculateViewState extends State<CalculateView> {
+class _CalculateViewState extends State<CalculateView>
+    with SingleTickerProviderStateMixin {
+  final List<String> _categories = [
+    "Documents",
+    "Glass",
+    "Liquid",
+    "Food",
+    "Electronic",
+    "Product",
+    "Others"
+  ];
+  int _selectedIndex = 0;
+  late AnimationController _buttonAnimationController;
+  late Animation<double> _buttonAnimation;
+  final tween = Tween<double>(begin: 1.0, end: 0.8);
+  @override
+  void initState() {
+    super.initState();
+    _buttonAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 150));
+    _buttonAnimation = tween.animate(
+      CurvedAnimation(
+        parent: _buttonAnimationController,
+        curve: Curves.easeOut,
+      ),
+    );
+    _buttonAnimationController.addStatusListener((status) {
+      print("Button animation status:: ${status.name}");
+      if (status == AnimationStatus.completed) {
+        _buttonAnimationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        // _buttonAnimationController.forward();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -109,27 +144,52 @@ class _CalculateViewState extends State<CalculateView> {
                   Wrap(
                     children: [
                       ...List.generate(
-                        7,
-                        (index) => Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.primaryColor,
+                        _categories.length,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedIndex = index;
+                            });
+                            _buttonAnimationController.forward();
+                          },
+                          child: ScaleTransition(
+                            scale: _selectedIndex == index
+                                ? _buttonAnimation
+                                : const AlwaysStoppedAnimation<double>(1.0),
+                            child: AnimatedContainer(
+                              duration: AppConfig.animationDuration,
+                              curve: Curves.easeIn,
+                              decoration: BoxDecoration(
+                                border: _selectedIndex == index
+                                    ? null
+                                    : Border.all(
+                                        color: AppColors.primaryColor,
+                                      ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                                color: _selectedIndex == index
+                                    ? AppColors.primaryColor
+                                    : null,
+                              ),
+                              padding: const EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                                top: 7,
+                                bottom: 7,
+                              ),
+                              margin: const EdgeInsets.only(
+                                left: 7,
+                                top: 12,
+                              ),
+                              child: AppText.regular(
+                                _categories[index],
+                                color: _selectedIndex == index
+                                    ? AppColors.primaryWhiteColor
+                                    : null,
+                              ),
                             ),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
                           ),
-                          padding: const EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                            top: 7,
-                            bottom: 7,
-                          ),
-                          margin: const EdgeInsets.only(
-                            left: 7,
-                            top: 12,
-                          ),
-                          child: AppText.regular("Documents"),
                         ),
                       ),
                     ],
