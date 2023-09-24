@@ -45,6 +45,12 @@ class _AppButtonState extends State<AppButton>
   }
 
   @override
+  void dispose() {
+    _buttonAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ScaleTransition(
       scale: _buttonAnimation,

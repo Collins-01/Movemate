@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movemate/presentation/views/components/components.dart';
 import 'package:movemate/presentation/views/shipment_info_view.dart';
 import 'package:movemate/presentation/widgets/widgets.dart';
 import 'package:movemate/utils/utils.dart';
@@ -22,28 +23,71 @@ class _CalculateViewState extends State<CalculateView>
     "Others"
   ];
   int _selectedIndex = 0;
-  late AnimationController _buttonAnimationController;
+  late AnimationController _animationController;
   late Animation<double> _buttonAnimation;
-  final tween = Tween<double>(begin: 1.0, end: 0.8);
+  late Animation<double> _destinationAnimation;
+  late Animation<double> _destinationInfoAnimation;
+  late Animation<double> _packagingAnimation;
+  late Animation<double> _categoriesAnimation;
+  final tween = Tween<double>(begin: -70, end: 0);
   @override
   void initState() {
     super.initState();
-    _buttonAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 150));
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
     _buttonAnimation = tween.animate(
       CurvedAnimation(
-        parent: _buttonAnimationController,
-        curve: Curves.easeOut,
+        parent: _animationController,
+        curve: const Interval(
+          0,
+          0.3,
+          curve: Curves.easeIn,
+        ),
       ),
     );
-    _buttonAnimationController.addStatusListener((status) {
-      print("Button animation status:: ${status.name}");
-      if (status == AnimationStatus.completed) {
-        _buttonAnimationController.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        // _buttonAnimationController.forward();
-      }
-    });
+    _destinationAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0,
+          0.1,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
+    _destinationInfoAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0,
+          0.1,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
+    _packagingAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0,
+          0.1,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
+    _categoriesAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0,
+          0.1,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
+    _animationController.forward();
   }
 
   @override
@@ -77,152 +121,183 @@ class _CalculateViewState extends State<CalculateView>
                   const SizedBox(
                     height: 20,
                   ),
-                  AppText.heading3("Destination"),
+                  AnimatedBuilder(
+                      animation: _destinationAnimation,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(
+                            0.0,
+                            100 * (1 - _destinationAnimation.value),
+                          ),
+                          child: Opacity(
+                            opacity: _animationController.value,
+                            child: AppText.heading3("Destination"),
+                          ),
+                        );
+                      }),
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: const BoxDecoration(
-                      color: AppColors.primaryWhiteColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12),
-                      ),
-                    ),
-                    child: const Column(
-                      children: [
-                        CalculateTextFieldWidget(
-                          icon: Icons.assignment_late_outlined,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        CalculateTextFieldWidget(
-                          icon: Icons.assignment_late_outlined,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        CalculateTextFieldWidget(
-                          icon: Icons.assignment_late_outlined,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  AppText.heading3(
-                    "Packaging",
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  AppText.regular("What are you sending?"),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const CalculateTextFieldWidget(
-                    icon: Icons.gif_box,
-                    bgColor: Colors.white,
-                    suffixIcon: Icon(Icons.keyboard_arrow_down),
-                    hintText: "Box",
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  AppText.heading3(
-                    "Categories",
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  AppText.regular("What are you sending?"),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Wrap(
-                    children: [
-                      ...List.generate(
-                        _categories.length,
-                        (index) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedIndex = index;
-                            });
-                            _buttonAnimationController.forward();
-                          },
-                          child: ScaleTransition(
-                            scale: _selectedIndex == index
-                                ? _buttonAnimation
-                                : const AlwaysStoppedAnimation<double>(1.0),
-                            child: AnimatedContainer(
-                              duration: AppConfig.animationDuration,
-                              curve: Curves.easeIn,
-                              decoration: BoxDecoration(
-                                border: _selectedIndex == index
-                                    ? null
-                                    : Border.all(
-                                        color: AppColors.primaryColor,
-                                      ),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(8),
+                  AnimatedBuilder(
+                      animation: _destinationInfoAnimation,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(
+                            0.0,
+                            80 * (1 - _destinationInfoAnimation.value),
+                          ),
+                          child: Opacity(
+                            opacity: _animationController.value,
+                            child: Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: const BoxDecoration(
+                                color: AppColors.primaryWhiteColor,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(12),
                                 ),
-                                color: _selectedIndex == index
-                                    ? AppColors.primaryColor
-                                    : null,
                               ),
-                              padding: const EdgeInsets.only(
-                                left: 10,
-                                right: 10,
-                                top: 7,
-                                bottom: 7,
-                              ),
-                              margin: const EdgeInsets.only(
-                                left: 7,
-                                top: 12,
-                              ),
-                              child: AppText.regular(
-                                _categories[index],
-                                color: _selectedIndex == index
-                                    ? AppColors.primaryWhiteColor
-                                    : null,
+                              child: const Column(
+                                children: [
+                                  CalculateTextFieldWidget(
+                                    icon: Icons.assignment_late_outlined,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  CalculateTextFieldWidget(
+                                    icon: Icons.assignment_late_outlined,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  CalculateTextFieldWidget(
+                                    icon: Icons.assignment_late_outlined,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
+                        );
+                      }),
+                  const SizedBox(
+                    height: 20,
                   ),
+                  AnimatedBuilder(
+                      animation: _packagingAnimation,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(
+                            0.0,
+                            60 * (1 - _packagingAnimation.value),
+                          ),
+                          child: Opacity(
+                              opacity: _animationController.value,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppText.heading3(
+                                    "Packaging",
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  AppText.regular("What are you sending?"),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const CalculateTextFieldWidget(
+                                    icon: Icons.gif_box,
+                                    bgColor: Colors.white,
+                                    suffixIcon: Icon(Icons.keyboard_arrow_down),
+                                    hintText: "Box",
+                                  ),
+                                ],
+                              )),
+                        );
+                      }),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  AnimatedBuilder(
+                      animation: _categoriesAnimation,
+                      builder: (context, child) {
+                        return Transform.translate(
+                          offset: Offset(
+                            200 * (1 - _categoriesAnimation.value),
+                            0.0,
+                          ),
+                          child: Opacity(
+                              opacity: _animationController.value,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppText.heading3(
+                                    "Categories",
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  AppText.regular("What are you sending?"),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Wrap(
+                                    children: [
+                                      ...List.generate(
+                                        _categories.length,
+                                        (index) => CategoryItemComponent(
+                                          isSelected: _selectedIndex == index,
+                                          title: _categories[index],
+                                          onTap: () => setState(
+                                            () {
+                                              _selectedIndex = index;
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                        );
+                      }),
                   const SizedBox(
                     height: 50,
                   ),
                 ],
               ),
             ),
-            Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  padding: const EdgeInsets.only(
-                    top: 15,
-                    bottom: 15,
-                    left: 20,
-                    right: 20,
-                  ),
-                  decoration: const BoxDecoration(
-                    color: AppColors.primaryWhiteColor,
-                  ),
-                  child: AppButton(
-                    title: "Calculate",
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const ShipmentInfoView(),
+            AnimatedBuilder(
+                animation: _buttonAnimation,
+                builder: (context, child) {
+                  return Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Opacity(
+                      opacity: _animationController.value,
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          top: 15,
+                          bottom: 15,
+                          left: 20,
+                          right: 20,
+                        ),
+                        decoration: const BoxDecoration(
+                          color: AppColors.primaryWhiteColor,
+                        ),
+                        child: AppButton(
+                          title: "Calculate",
+                          onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const ShipmentInfoView(),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ))
+                  );
+                })
           ],
         ),
         // bottomNavigationBar: const BottomNav(activeIndex: 1),
