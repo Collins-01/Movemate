@@ -13,6 +13,7 @@ class _SearchViewState extends State<SearchView> {
   final TextEditingController _searchBarController = TextEditingController();
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final List<int> _list = [];
+  final _debouncer = Debouncer(milliseconds: 600);
   @override
   void initState() {
     super.initState();
@@ -26,6 +27,12 @@ class _SearchViewState extends State<SearchView> {
         _addItem();
       }
     }
+  }
+
+  @override
+  void dispose() {
+    _searchBarController.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,7 +61,10 @@ class _SearchViewState extends State<SearchView> {
               ),
             ),
             child: TextField(
-              onChanged: (value) => _handleSearchBarChanged(value),
+              controller: _searchBarController,
+              onChanged: (value) => _debouncer.run(() {
+                _handleSearchBarChanged(value);
+              }),
               decoration: InputDecoration(
                 suffixIconConstraints: const BoxConstraints(
                   maxHeight: 40,
