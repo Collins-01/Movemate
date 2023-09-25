@@ -80,162 +80,170 @@ class _CalculateViewState extends State<CalculateView>
         ),
         body: Stack(
           children: [
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: SizingConfig.defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  AnimatedBuilder(
-                      animation: _destinationAnimation,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(
-                            0.0,
-                            100 * (1 - _destinationAnimation.value),
-                          ),
-                          child: Opacity(
-                            opacity: _animationController.value,
-                            child: AppText.heading3("Destination"),
-                          ),
-                        );
-                      }),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  AnimatedBuilder(
-                      animation: _destinationInfoAnimation,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(
-                            0.0,
-                            80 * (1 - _destinationInfoAnimation.value),
-                          ),
-                          child: Opacity(
-                            opacity: _animationController.value,
-                            child: Container(
-                              padding: const EdgeInsets.all(20),
-                              decoration: const BoxDecoration(
-                                color: AppColors.primaryWhiteColor,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(12),
-                                ),
+            Positioned.fill(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizingConfig.defaultPadding),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      AnimatedBuilder(
+                          animation: _destinationAnimation,
+                          builder: (context, child) {
+                            return Transform.translate(
+                              offset: Offset(
+                                0.0,
+                                100 * (1 - _destinationAnimation.value),
                               ),
-                              child: const Column(
-                                children: [
-                                  CalculateTextFieldWidget(
-                                    icon: Icons.unarchive_outlined,
-                                    hintText: "Sender location",
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  CalculateTextFieldWidget(
-                                    icon: Icons.archive_outlined,
-                                    hintText: "Receiver location",
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  CalculateTextFieldWidget(
-                                    icon: Icons.hourglass_bottom_outlined,
-                                    hintText: "Approx weight",
-                                  ),
-                                ],
+                              child: Opacity(
+                                opacity: _animationController.value,
+                                child: AppText.heading3("Destination"),
                               ),
-                            ),
-                          ),
-                        );
-                      }),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  AnimatedBuilder(
-                      animation: _packagingAnimation,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(
-                            0.0,
-                            60 * (1 - _packagingAnimation.value),
-                          ),
-                          child: Opacity(
-                              opacity: _animationController.value,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AppText.heading3(
-                                    "Packaging",
+                            );
+                          }),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      AnimatedBuilder(
+                          animation: _destinationInfoAnimation,
+                          builder: (context, child) {
+                            return Transform.translate(
+                              offset: Offset(
+                                0.0,
+                                80 * (1 - _destinationInfoAnimation.value),
+                              ),
+                              child: Opacity(
+                                opacity: _animationController.value,
+                                child: Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.primaryWhiteColor,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(12),
+                                    ),
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  AppText.regular("What are you sending?"),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const CalculateTextFieldWidget(
-                                    icon: Icons.help,
-                                    bgColor: Colors.white,
-                                    suffixIcon: Icon(Icons.keyboard_arrow_down),
-                                    hintText: "Box",
-                                  ),
-                                ],
-                              )),
-                        );
-                      }),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  AnimatedBuilder(
-                      animation: _categoriesAnimation,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(
-                            200 * (1 - _categoriesAnimation.value),
-                            0.0,
-                          ),
-                          child: Opacity(
-                              opacity: _animationController.value,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AppText.heading3(
-                                    "Categories",
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  AppText.regular("What are you sending?"),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Wrap(
+                                  child: const Column(
                                     children: [
-                                      ...List.generate(
-                                        _categories.length,
-                                        (index) => CategoryItemComponent(
-                                          isSelected: _selectedIndex == index,
-                                          title: _categories[index],
-                                          onTap: () => setState(
-                                            () {
-                                              _selectedIndex = index;
-                                            },
-                                          ),
-                                        ),
+                                      CalculateTextFieldWidget(
+                                        icon: Icons.unarchive_outlined,
+                                        hintText: "Sender location",
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      CalculateTextFieldWidget(
+                                        icon: Icons.archive_outlined,
+                                        hintText: "Receiver location",
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      CalculateTextFieldWidget(
+                                        icon: Icons.hourglass_bottom_outlined,
+                                        hintText: "Approx weight",
                                       ),
                                     ],
                                   ),
-                                ],
-                              )),
-                        );
-                      }),
-                  const SizedBox(
-                    height: 50,
+                                ),
+                              ),
+                            );
+                          }),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      AnimatedBuilder(
+                          animation: _packagingAnimation,
+                          builder: (context, child) {
+                            return Transform.translate(
+                              offset: Offset(
+                                0.0,
+                                60 * (1 - _packagingAnimation.value),
+                              ),
+                              child: Opacity(
+                                  opacity: _animationController.value,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AppText.heading3(
+                                        "Packaging",
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      AppText.regular("What are you sending?"),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      const CalculateTextFieldWidget(
+                                        icon: Icons.help,
+                                        bgColor: Colors.white,
+                                        suffixIcon:
+                                            Icon(Icons.keyboard_arrow_down),
+                                        hintText: "Box",
+                                      ),
+                                    ],
+                                  )),
+                            );
+                          }),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      AnimatedBuilder(
+                          animation: _categoriesAnimation,
+                          builder: (context, child) {
+                            return Transform.translate(
+                              offset: Offset(
+                                200 * (1 - _categoriesAnimation.value),
+                                0.0,
+                              ),
+                              child: Opacity(
+                                  opacity: _animationController.value,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AppText.heading3(
+                                        "Categories",
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      AppText.regular("What are you sending?"),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Wrap(
+                                        children: [
+                                          ...List.generate(
+                                            _categories.length,
+                                            (index) => CategoryItemComponent(
+                                              isSelected:
+                                                  _selectedIndex == index,
+                                              title: _categories[index],
+                                              onTap: () => setState(
+                                                () {
+                                                  _selectedIndex = index;
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )),
+                            );
+                          }),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
             AnimatedBuilder(

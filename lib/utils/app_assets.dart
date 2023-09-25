@@ -7,6 +7,7 @@ class AppAssets {
   static const String man = "assets/images/man.jpeg";
   static const String deliveryBox = "assets/images/delivery_box.jpeg";
   static const String box = "assets/images/box.png";
+  static const String deployedCode = "assets/images/deployed_code.png";
 
   static Future<void> preCacheAssets(BuildContext context) async {
     // precacheImage(const AssetImage(truckOne), context);
@@ -14,5 +15,6 @@ class AppAssets {
     precacheImage(const AssetImage(truckThree), context);
     precacheImage(const AssetImage(man), context);
     precacheImage(const AssetImage(box), context);
+    precacheImage(const AssetImage(deployedCode), context);
   }
 }

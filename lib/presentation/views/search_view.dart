@@ -139,25 +139,28 @@ class _SearchViewState extends State<SearchView> {
             Row(
               children: [
                 Container(
-                  height: 32,
-                  width: 32,
-                  decoration: const BoxDecoration(
-                    color: AppColors.primaryColor,
-                    shape: BoxShape.circle,
-                  ),
-                ),
+                    height: 40,
+                    width: 40,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.asset(
+                      AppAssets.deployedCode,
+                      color: Colors.white,
+                    )),
                 const SizedBox(
                   width: 10,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppText.heading5("Laborum proident reprehenderit amet"),
+                    AppText.heading5("Macbook pro M2"),
                     const SizedBox(
                       height: 5,
                     ),
-                    AppText.medium(
-                        "Culpa sit adipisicing sunt est tempor sunt aute")
+                    AppText.medium("#676476476476746 . Paris -> Moroco")
                   ],
                 )
               ],
