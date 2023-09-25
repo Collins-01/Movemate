@@ -18,7 +18,7 @@ class CalculateTextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: bgColor ?? Colors.grey.shade200,
+        color: bgColor ?? Colors.grey.shade100,
         borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
@@ -29,7 +29,7 @@ class CalculateTextFieldWidget extends StatelessWidget {
           border: InputBorder.none,
           contentPadding: const EdgeInsets.only(
             right: 15,
-            top: 12,
+            top: 14,
           ),
           suffixIcon: suffixIcon ?? const SizedBox.shrink(),
           prefixIcon: Row(
@@ -47,7 +47,7 @@ class CalculateTextFieldWidget extends StatelessWidget {
               Container(
                 height: 25,
                 width: 2,
-                color: Colors.red,
+                color: Colors.grey.shade300,
               )
             ],
           ),

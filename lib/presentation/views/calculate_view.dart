@@ -59,6 +59,7 @@ class _CalculateViewState extends State<CalculateView>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: AppColors.primaryColor,
           toolbarHeight: 80,
@@ -124,19 +125,22 @@ class _CalculateViewState extends State<CalculateView>
                               child: const Column(
                                 children: [
                                   CalculateTextFieldWidget(
-                                    icon: Icons.assignment_late_outlined,
+                                    icon: Icons.unarchive_outlined,
+                                    hintText: "Sender location",
                                   ),
                                   SizedBox(
                                     height: 20,
                                   ),
                                   CalculateTextFieldWidget(
-                                    icon: Icons.assignment_late_outlined,
+                                    icon: Icons.archive_outlined,
+                                    hintText: "Receiver location",
                                   ),
                                   SizedBox(
                                     height: 20,
                                   ),
                                   CalculateTextFieldWidget(
-                                    icon: Icons.assignment_late_outlined,
+                                    icon: Icons.hourglass_bottom_outlined,
+                                    hintText: "Approx weight",
                                   ),
                                 ],
                               ),
@@ -171,7 +175,7 @@ class _CalculateViewState extends State<CalculateView>
                                     height: 10,
                                   ),
                                   const CalculateTextFieldWidget(
-                                    icon: Icons.gif_box,
+                                    icon: Icons.help,
                                     bgColor: Colors.white,
                                     suffixIcon: Icon(Icons.keyboard_arrow_down),
                                     hintText: "Box",
@@ -238,7 +242,7 @@ class _CalculateViewState extends State<CalculateView>
                   return Positioned(
                     left: 0,
                     right: 0,
-                    bottom: 0,
+                    bottom: _buttonAnimation.value,
                     child: Opacity(
                       opacity: _animationController.value,
                       child: Container(

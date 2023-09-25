@@ -68,12 +68,12 @@ class _CategoryItemComponentState extends State<CategoryItemComponent>
             border: widget.isSelected
                 ? null
                 : Border.all(
-                    color: AppColors.primaryColor,
+                    color: const Color(0xff142334),
                   ),
             borderRadius: const BorderRadius.all(
               Radius.circular(8),
             ),
-            color: widget.isSelected ? AppColors.primaryColor : null,
+            color: widget.isSelected ? const Color(0xff142334) : null,
           ),
           padding: const EdgeInsets.only(
             left: 10,
