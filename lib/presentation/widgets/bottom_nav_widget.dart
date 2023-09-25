@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:movemate/presentation/views/calculate_view.dart';
 import 'package:movemate/presentation/views/home_view.dart';
+import 'package:movemate/presentation/views/shipment_history_view.dart';
 
+import 'package:movemate/presentation/widgets/widgets.dart';
 import 'package:movemate/utils/utils.dart';
 
 class BottomNav extends StatefulWidget {
@@ -20,7 +22,14 @@ class _BottomNavState extends State<BottomNav>
     with SingleTickerProviderStateMixin {
   late Animation<Offset> _indicatorAnimation;
   late AnimationController _indicatorController;
+  final _navItems = [
+    NavItem(title: "Home", icon: Icons.home),
+    NavItem(title: "Calculate", icon: Icons.calculate),
+    NavItem(title: "Shipment", icon: Icons.alarm),
+    NavItem(title: "Profile", icon: Icons.person_2_outlined),
+  ];
 
+  int _selectedIndex = 0;
   @override
   void initState() {
     _indicatorController =
@@ -32,83 +41,94 @@ class _BottomNavState extends State<BottomNav>
     super.initState();
   }
 
+// AnimatedContainer(
+//                 duration: const Duration(milliseconds: 200),
+//                 curve: Curves.bounceIn,
+//                 height: 2,
+//                 width: MediaQuery.of(context).size.width / 5,
+//                 color: AppColors.primaryColor,
+//               ),
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
+      body: const HomeView(),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.only(top: 10, left: 8, right: 8, bottom: 8),
+          color: AppColors.primaryWhiteColor,
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 2,
-                width: MediaQuery.of(context).size.width / 5,
-                color: AppColors.primaryColor,
-              ),
-              // SlideTransition(
-              //   position: _indicatorAnimation,
-              //   textDirection: TextDirection.ltr,
-              //   child: Container(
-              //     height: 2,
-              //     width: MediaQuery.of(context).size.width / 5,
-              //     color: AppColors.primaryColor,
-              //   ),
-              // )
-            ],
-          ),
-          BottomNavigationBar(
-            // backgroundColor: AppColors.primaryWhiteColor,
-
-            currentIndex: widget.activeIndex,
-            onTap: (index) {
-              // * Index 0
-              if (index == 0 && widget.activeIndex == 0) {
-                // * DO nothing
-              }
-              if (index == 0 && widget.activeIndex != 0) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const HomeView(),
+              ...List.generate(
+                _navItems.length,
+                (index) => SizedBox(
+                  child: GestureDetector(
+                    onTap: () async {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                      await Future.delayed(
+                        const Duration(milliseconds: 300),
+                        () {
+                          if (_selectedIndex == 1) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const CalculateView(),
+                              ),
+                            );
+                          }
+                          if (_selectedIndex == 2) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const ShipmentHistoryView(),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _selectedIndex == index
+                            ? AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                curve: Curves.bounceIn,
+                                height: 2,
+                                width: MediaQuery.of(context).size.width / 5,
+                                color: AppColors.primaryColor,
+                              )
+                            : AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                // curve: Curves.bounceIn,
+                                height: 2,
+                                width: MediaQuery.of(context).size.width / 5,
+                                color: Colors.transparent,
+                              ),
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Icon(_navItems[index].icon),
+                        AppText.medium(_navItems[index].title),
+                      ],
+                    ),
                   ),
-                );
-              }
-              // * Index 2
-              if (index == 1 && widget.activeIndex == 1) {
-                // * DO nothing
-              }
-              if (index == 1 && widget.activeIndex != 1) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const CalculateView(),
-                  ),
-                );
-              }
-            },
-            elevation: 0.0,
-            type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(
-                label: "Home",
-                icon: Icon(Icons.home),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.calculate_outlined),
-                label: "Calculate",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.alarm_outlined),
-                label: "Shipment",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_2_outlined),
-                label: "Profile",
+                ),
               )
             ],
           ),
-        ],
+        ),
       ),
     );
   }
+}
+
+class NavItem {
+  final String title;
+  final IconData icon;
+  NavItem({
+    required this.title,
+    required this.icon,
+  });
 }
