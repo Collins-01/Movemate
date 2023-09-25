@@ -41,17 +41,25 @@ class _BottomNavState extends State<BottomNav>
     super.initState();
   }
 
-// AnimatedContainer(
-//                 duration: const Duration(milliseconds: 200),
-//                 curve: Curves.bounceIn,
-//                 height: 2,
-//                 width: MediaQuery.of(context).size.width / 5,
-//                 color: AppColors.primaryColor,
-//               ),
+  // List of screens
+  final List<Widget> _screens = [
+    const HomeView(), // Replace with your screen widget
+    const CalculateView(), // Replace with your screen widget
+    const ShipmentHistoryView(), // Replace with your screen widget
+    SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: AppText.heading1(
+            "Profile View",
+          ),
+        ),
+      ),
+    ), // Replace with your screen widget
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const HomeView(),
+      body: _screens[_selectedIndex],
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: const EdgeInsets.only(top: 10, left: 8, right: 8, bottom: 8),
@@ -68,25 +76,25 @@ class _BottomNavState extends State<BottomNav>
                       setState(() {
                         _selectedIndex = index;
                       });
-                      await Future.delayed(
-                        const Duration(milliseconds: 300),
-                        () {
-                          if (_selectedIndex == 1) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const CalculateView(),
-                              ),
-                            );
-                          }
-                          if (_selectedIndex == 2) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const ShipmentHistoryView(),
-                              ),
-                            );
-                          }
-                        },
-                      );
+                      // await Future.delayed(
+                      //   const Duration(milliseconds: 300),
+                      //   () {
+                      //     if (_selectedIndex == 1) {
+                      //       Navigator.of(context).push(
+                      //         MaterialPageRoute(
+                      //           builder: (_) => const CalculateView(),
+                      //         ),
+                      //       );
+                      //     }
+                      //     if (_selectedIndex == 2) {
+                      //       Navigator.of(context).push(
+                      //         MaterialPageRoute(
+                      //           builder: (_) => const ShipmentHistoryView(),
+                      //         ),
+                      //       );
+                      //     }
+                      //   },
+                      // );
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,

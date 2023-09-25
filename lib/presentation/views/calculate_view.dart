@@ -65,7 +65,9 @@ class _CalculateViewState extends State<CalculateView>
           toolbarHeight: 80,
           centerTitle: true,
           leading: IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              //  Navigator.of(context).popUntil((route) => route.isFirst),
+            },
             icon: const Icon(
               Icons.arrow_back_ios,
               color: AppColors.primaryWhiteColor,
