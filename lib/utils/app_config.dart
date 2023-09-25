@@ -1,3 +1,3 @@
 class AppConfig {
-  static const animationDuration = Duration(milliseconds: 700);
+  static const animationDuration = Duration(milliseconds: 800);
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movemate/presentation/views/home_view.dart';
+import 'package:movemate/presentation/views/calculate_view.dart';
 import 'package:movemate/utils/utils.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     AppAssets.preCacheAssets(context);
     return const MaterialApp(
-      home: HomeView(),
+      home: CalculateView(),
     );
   }
 }

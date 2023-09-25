@@ -22,10 +22,8 @@ class _HomeViewState extends State<HomeView>
 
   @override
   void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    );
+    _animationController =
+        AnimationController(vsync: this, duration: AppConfig.animationDuration);
     _appBarAnimation = Tween<double>(begin: -50.0, end: 0.0).animate(
       _animationController,
     );

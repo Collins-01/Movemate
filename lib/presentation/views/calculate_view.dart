@@ -35,57 +35,22 @@ class _CalculateViewState extends State<CalculateView>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: AppConfig.animationDuration,
     );
     _buttonAnimation = tween.animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(
-          0,
-          0.3,
-          curve: Curves.easeIn,
-        ),
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
     _destinationAnimation = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(
-          0,
-          0.1,
-          curve: Curves.easeIn,
-        ),
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
     _destinationInfoAnimation = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(
-          0,
-          0.1,
-          curve: Curves.easeIn,
-        ),
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
     _packagingAnimation = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(
-          0,
-          0.1,
-          curve: Curves.easeIn,
-        ),
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
     _categoriesAnimation = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(
-          0,
-          0.1,
-          curve: Curves.easeIn,
-        ),
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
     _animationController.forward();
   }
