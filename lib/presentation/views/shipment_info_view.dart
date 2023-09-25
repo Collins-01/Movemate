@@ -77,7 +77,20 @@ class _ShipmentInfoViewState extends State<ShipmentInfoView>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AppText.heading1("MoveMate"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppText.heading1(
+                    "MoveMate",
+                    color: AppColors.primaryColor,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  const Icon(Icons.fire_truck_outlined,
+                      color: AppColors.primaryOrangeColor)
+                ],
+              ),
               const SizedBox(
                 height: 40,
               ),
@@ -90,9 +103,14 @@ class _ShipmentInfoViewState extends State<ShipmentInfoView>
                     child: Opacity(
                       opacity: _animationController.value,
                       child: Container(
-                        height: 100,
-                        width: 100,
-                        color: Colors.blue,
+                        height: 150,
+                        width: 150,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(AppAssets.box),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -146,7 +164,7 @@ class _ShipmentInfoViewState extends State<ShipmentInfoView>
                       child: Opacity(
                         opacity: _titleAnimation.value,
                         child: AppText.medium(
-                          "Nostrud nulla in non voluptate labore laboris reprehend",
+                          "This amount is estimated this will vary\n if you change your weight or height",
                         ),
                       ),
                     );
