@@ -58,73 +58,73 @@ class _BottomNavState extends State<BottomNav>
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screens[_selectedIndex],
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.only(top: 10, left: 8, right: 8, bottom: 8),
-          color: AppColors.primaryWhiteColor,
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ...List.generate(
-                _navItems.length,
-                (index) => SizedBox(
-                  child: GestureDetector(
-                    onTap: () async {
-                      setState(() {
-                        _selectedIndex = index;
-                      });
-                      // await Future.delayed(
-                      //   const Duration(milliseconds: 300),
-                      //   () {
-                      //     if (_selectedIndex == 1) {
-                      //       Navigator.of(context).push(
-                      //         MaterialPageRoute(
-                      //           builder: (_) => const CalculateView(),
-                      //         ),
-                      //       );
-                      //     }
-                      //     if (_selectedIndex == 2) {
-                      //       Navigator.of(context).push(
-                      //         MaterialPageRoute(
-                      //           builder: (_) => const ShipmentHistoryView(),
-                      //         ),
-                      //       );
-                      //     }
-                      //   },
-                      // );
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _selectedIndex == index
-                            ? AnimatedContainer(
-                                duration: const Duration(milliseconds: 200),
-                                curve: Curves.bounceIn,
-                                height: 2,
-                                width: MediaQuery.of(context).size.width / 5,
-                                color: AppColors.primaryColor,
-                              )
-                            : AnimatedContainer(
-                                duration: const Duration(milliseconds: 200),
-                                // curve: Curves.bounceIn,
-                                height: 2,
-                                width: MediaQuery.of(context).size.width / 5,
-                                color: Colors.transparent,
-                              ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        Icon(_navItems[index].icon),
-                        AppText.medium(_navItems[index].title),
-                      ],
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selectedIndex != 0) {
+          // If not on index 0, navigate back to index 0
+          setState(() {
+            _selectedIndex = 0;
+          });
+          return false; // Prevent default back navigation
+        }
+        return true; // Allow default back navigation
+      },
+      child: Scaffold(
+        // * Replace body with IndexedStack widget
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _screens,
+        ),
+        bottomNavigationBar: SafeArea(
+          child: Container(
+            padding:
+                const EdgeInsets.only(top: 10, left: 8, right: 8, bottom: 8),
+            color: AppColors.primaryWhiteColor,
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ...List.generate(
+                  _navItems.length,
+                  (index) => SizedBox(
+                    child: GestureDetector(
+                      onTap: () async {
+                        if (_selectedIndex != index) {
+                          setState(() {
+                            _selectedIndex = index;
+                          });
+                        }
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _selectedIndex == index
+                              ? AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.bounceIn,
+                                  height: 2,
+                                  width: MediaQuery.of(context).size.width / 5,
+                                  color: AppColors.primaryColor,
+                                )
+                              : AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  // curve: Curves.bounceIn,
+                                  height: 2,
+                                  width: MediaQuery.of(context).size.width / 5,
+                                  color: Colors.transparent,
+                                ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          Icon(_navItems[index].icon),
+                          AppText.medium(_navItems[index].title),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

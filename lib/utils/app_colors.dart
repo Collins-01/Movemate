@@ -8,5 +8,5 @@ class AppColors {
   static const Color scaffoldBackgroundColor = Color(0xfff5f5f5);
   static const Color textColor = Color(0xff3a3a3a);
   static const Color whiteGrayColor = Color(0xffF2F3F5);
-  static const Color textGrayColor = Color(0xffD3D3D3);
+  static const Color textGrayColor = Color(0xff26282A);
 }
