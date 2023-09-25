@@ -7,4 +7,6 @@ class AppColors {
   static const Color primaryLightGreenColor = Color(0xffC6F9E0);
   static const Color scaffoldBackgroundColor = Color(0xfff5f5f5);
   static const Color textColor = Color(0xff3a3a3a);
+  static const Color whiteGrayColor = Color(0xffF2F3F5);
+  static const Color textGrayColor = Color(0xffD3D3D3);
 }
