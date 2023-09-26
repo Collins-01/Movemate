@@ -106,6 +106,7 @@ class _ShipmentHistoryViewState extends State<ShipmentHistoryView>
               ),
             ),
             body: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: _tabController,
               children: [
                 ...List.generate(
