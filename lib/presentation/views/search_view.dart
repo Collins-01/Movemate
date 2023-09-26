@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movemate/presentation/views/components/search_field.dart';
 import 'package:movemate/presentation/widgets/widgets.dart';
 import 'package:movemate/utils/utils.dart';
 
@@ -9,7 +10,8 @@ class SearchView extends StatefulWidget {
   State<SearchView> createState() => _SearchViewState();
 }
 
-class _SearchViewState extends State<SearchView> {
+class _SearchViewState extends State<SearchView>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _searchBarController = TextEditingController();
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final List<int> _list = [];
@@ -41,62 +43,43 @@ class _SearchViewState extends State<SearchView> {
       child: Scaffold(
         backgroundColor: const Color(0xfff5f5f5),
         appBar: AppBar(
-          backgroundColor: AppColors.primaryColor,
-          toolbarHeight: 80,
-          bottom: const PreferredSize(
-            preferredSize: Size.fromHeight(10),
-            child: SizedBox(),
-          ),
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back_ios),
-          ),
-          title: Container(
-            height: 54,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(30),
+            backgroundColor: AppColors.primaryColor,
+            toolbarHeight: 80,
+            bottom: const PreferredSize(
+              preferredSize: Size.fromHeight(10),
+              child: SizedBox(),
+            ),
+            leading: TweenAnimationBuilder(
+              tween: Tween<double>(begin: 0, end: 30),
+              curve: Curves.ease,
+              duration: const Duration(milliseconds: 700),
+              builder: (context, value, child) {
+                return Container(
+                  width: 50,
+                  height: 40,
+                  alignment: Alignment.centerLeft,
+                  child: Transform.translate(
+                    offset: Offset(value, 0),
+                    child: child,
+                  ),
+                );
+              },
+              child: InkWell(
+                onTap: () => Navigator.pop(context),
+                child: const Icon(Icons.arrow_back_ios),
               ),
             ),
-            child: TextField(
-              controller: _searchBarController,
-              onChanged: (value) => _debouncer.run(() {
-                _handleSearchBarChanged(value);
-              }),
-              decoration: InputDecoration(
-                suffixIconConstraints: const BoxConstraints(
-                  maxHeight: 40,
-                  maxWidth: 40,
-                ),
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 4),
-                  child: Container(
-                    // height: 26,
-                    // width: 26,
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                      color: AppColors.primaryOrangeColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.qr_code_scanner_outlined,
-                      color: Colors.white,
-                      size: 16,
-                    ),
+            title: Row(
+              children: [
+                Flexible(
+                  child: SearchField(
+                    onChanged: (value) => _debouncer.run(() {
+                      _handleSearchBarChanged(value);
+                    }),
                   ),
                 ),
-                prefixIcon: const Icon(
-                  Icons.search,
-                  color: AppColors.primaryColor,
-                ),
-                contentPadding: const EdgeInsets.only(left: 20, top: 17),
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-        ),
+              ],
+            )),
         body: Padding(
           padding: const EdgeInsets.only(top: 20),
           child: AnimatedList(

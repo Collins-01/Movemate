@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movemate/presentation/widgets/widgets.dart';
 import 'package:movemate/utils/utils.dart';
-
-import 'presentation/widgets/widgets.dart';
 
 void main() {
   runApp(const MainApp());

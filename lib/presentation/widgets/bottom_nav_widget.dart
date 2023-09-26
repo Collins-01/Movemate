@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:ui' show lerpDouble;
 import 'package:flutter/material.dart';
 import 'package:movemate/presentation/views/calculate_view.dart';
 import 'package:movemate/presentation/views/home_view.dart';
@@ -20,8 +21,6 @@ class BottomNav extends StatefulWidget {
 
 class _BottomNavState extends State<BottomNav>
     with SingleTickerProviderStateMixin {
-  late Animation<Offset> _indicatorAnimation;
-  late AnimationController _indicatorController;
   final _navItems = [
     NavItem(title: "Home", icon: Icons.home),
     NavItem(title: "Calculate", icon: Icons.calculate),
@@ -32,12 +31,6 @@ class _BottomNavState extends State<BottomNav>
   int _selectedIndex = 0;
   @override
   void initState() {
-    _indicatorController =
-        AnimationController(vsync: this, duration: AppConfig.animationDuration);
-    _indicatorAnimation = Tween(
-      begin: const Offset(0, 120),
-      end: const Offset(70, 120),
-    ).animate(_indicatorController);
     super.initState();
   }
 
@@ -70,59 +63,74 @@ class _BottomNavState extends State<BottomNav>
         return true; // Allow default back navigation
       },
       child: Scaffold(
-        // * Replace body with IndexedStack widget
         body: IndexedStack(
           index: _selectedIndex,
           children: _screens,
         ),
         bottomNavigationBar: SafeArea(
           child: Container(
-            padding:
-                const EdgeInsets.only(top: 10, left: 8, right: 8, bottom: 8),
+            padding: const EdgeInsets.only(bottom: 8),
             color: AppColors.primaryWhiteColor,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Stack(
               children: [
-                ...List.generate(
-                  _navItems.length,
-                  (index) => SizedBox(
-                    child: GestureDetector(
-                      onTap: () async {
-                        if (_selectedIndex != index) {
-                          setState(() {
-                            _selectedIndex = index;
-                          });
-                        }
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _selectedIndex == index
-                              ? AnimatedContainer(
-                                  duration: const Duration(milliseconds: 200),
-                                  curve: Curves.bounceIn,
-                                  height: 2,
-                                  width: MediaQuery.of(context).size.width / 5,
-                                  color: AppColors.primaryColor,
-                                )
-                              : AnimatedContainer(
-                                  duration: const Duration(milliseconds: 200),
-                                  // curve: Curves.bounceIn,
-                                  height: 2,
-                                  width: MediaQuery.of(context).size.width / 5,
-                                  color: Colors.transparent,
+                Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ...List.generate(
+                        _navItems.length,
+                        (index) => SizedBox(
+                          child: GestureDetector(
+                            onTap: () async {
+                              if (_selectedIndex != index) {
+                                setState(() {
+                                  _selectedIndex = index;
+                                });
+                              }
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                          const SizedBox(
-                            height: 2,
+                                Icon(
+                                  _navItems[index].icon,
+                                  color: _selectedIndex != index
+                                      ? Colors.grey[400]
+                                      : AppColors.navColor,
+                                ),
+                                AppText.medium(
+                                  _navItems[index].title,
+                                  color: _selectedIndex != index
+                                      ? Colors.grey[400]
+                                      : AppColors.navColor,
+                                ),
+                              ],
+                            ),
                           ),
-                          Icon(_navItems[index].icon),
-                          AppText.medium(_navItems[index].title),
-                        ],
-                      ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  width: MediaQuery.of(context).size.width,
+                  child: AnimatedAlign(
+                    alignment: Alignment(
+                        lerpDouble(-1.0, 1.0,
+                            _selectedIndex / (_navItems.length - 1))!,
+                        0),
+                    duration: const Duration(milliseconds: 300),
+                    child: Container(
+                      height: 3,
+                      width: MediaQuery.of(context).size.width / 5.1,
+                      color: AppColors.navColor,
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

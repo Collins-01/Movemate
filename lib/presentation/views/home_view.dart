@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movemate/presentation/views/components/tracking_item_component.dart';
+import 'package:movemate/presentation/views/components/search_field.dart';
 import 'package:movemate/presentation/views/search_view.dart';
 import 'package:movemate/presentation/widgets/widgets.dart';
 import 'package:movemate/utils/utils.dart';
@@ -160,65 +161,26 @@ class _HomeViewState extends State<HomeView>
                               const SizedBox(
                                 height: 20,
                               ),
-                              Container(
-                                height: 50,
-                                width: MediaQuery.of(context).size.width,
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                ),
-                                child: TextField(
-                                  controller: _searchController,
-                                  onTap: () {
-                                    FocusScope.of(context).unfocus();
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => const SearchView(),
-                                      ),
-                                    );
-                                  },
-                                  decoration: InputDecoration(
-                                    prefixIconColor: AppColors.primaryColor,
-                                    border: InputBorder.none,
-                                    hintText: "Enter the receipt number ...",
-                                    prefixIcon: const Icon(
-                                      Icons.search,
-                                      color: AppColors.primaryColor,
+                              // onTap: () {
+                              //       FocusScope.of(context).unfocus();
+                              //       Navigator.of(context).push(
+                              //         MaterialPageRoute(
+                              //           builder: (_) => const SearchView(),
+                              //         ),
+                              //       );
+                              //     },
+                              SearchField(
+                                isEnabled: true,
+                                hintText: "Enter the receipt number ...",
+                                onTap: () {
+                                  FocusScope.of(context).unfocus();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => const SearchView(),
                                     ),
-                                    suffixIconConstraints: const BoxConstraints(
-                                      maxHeight: 40,
-                                      maxWidth: 40,
-                                    ),
-                                    suffixIcon: Padding(
-                                      padding: const EdgeInsets.only(right: 4),
-                                      child: Container(
-                                        // height: 26,
-                                        // width: 26,
-                                        alignment: Alignment.center,
-                                        decoration: const BoxDecoration(
-                                          color: AppColors.primaryOrangeColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: const Icon(
-                                          Icons.qr_code_scanner_outlined,
-                                          color: Colors.white,
-                                          size: 16,
-                                        ),
-                                      ),
-                                    ),
-                                    contentPadding: const EdgeInsets.only(
-                                      left: 20,
-                                      top: 15,
-                                    ),
-                                  ),
-                                ),
-                              )
-                              // SearchBarWidget(
-                              //   controller: _searchController,
-                              // )
+                                  );
+                                },
+                              ),
                             ],
                           ),
                         ),
