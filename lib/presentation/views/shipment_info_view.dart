@@ -187,7 +187,12 @@ class _ShipmentInfoViewState extends State<ShipmentInfoView>
                             title: "Back to home",
                             onPressed: () {
                               print("Hellloooo");
-                              Navigator.pop(context);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (_) => const BottomNav(),
+                                ),
+                                (route) => false,
+                              );
                             },
                           )),
                     );

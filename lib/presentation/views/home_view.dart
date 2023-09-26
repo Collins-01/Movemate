@@ -161,14 +161,6 @@ class _HomeViewState extends State<HomeView>
                               const SizedBox(
                                 height: 20,
                               ),
-                              // onTap: () {
-                              //       FocusScope.of(context).unfocus();
-                              //       Navigator.of(context).push(
-                              //         MaterialPageRoute(
-                              //           builder: (_) => const SearchView(),
-                              //         ),
-                              //       );
-                              //     },
                               SearchField(
                                 isEnabled: true,
                                 hintText: "Enter the receipt number ...",

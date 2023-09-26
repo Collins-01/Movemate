@@ -73,6 +73,8 @@ class _SearchViewState extends State<SearchView>
               children: [
                 Flexible(
                   child: SearchField(
+                    isEnabled: true,
+                    hintText: "",
                     onChanged: (value) => _debouncer.run(() {
                       _handleSearchBarChanged(value);
                     }),

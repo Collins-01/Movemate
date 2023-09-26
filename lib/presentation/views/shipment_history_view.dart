@@ -60,7 +60,11 @@ class _ShipmentHistoryViewState extends State<ShipmentHistoryView>
               ),
               leading: IconButton(
                 onPressed: () {
-                  // _animationController.forward();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (_) => const BottomNav(),
+                      ),
+                      (route) => false);
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,

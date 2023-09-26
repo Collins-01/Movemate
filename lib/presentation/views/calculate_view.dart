@@ -66,7 +66,12 @@ class _CalculateViewState extends State<CalculateView>
           centerTitle: true,
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              // Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (_) => const BottomNav(),
+                  ),
+                  (route) => false);
             },
             icon: const Icon(
               Icons.arrow_back_ios,
