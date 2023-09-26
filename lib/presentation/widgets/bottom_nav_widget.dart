@@ -107,7 +107,7 @@ class _BottomNavState extends State<BottomNav>
                               }
                               if (_selectedIndex == 2) {
                                 await Future.delayed(
-                                  const Duration(milliseconds: 120),
+                                  const Duration(milliseconds: 160),
                                   () {
                                     Navigator.of(context)
                                         .push(
