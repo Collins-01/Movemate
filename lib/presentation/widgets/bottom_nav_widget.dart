@@ -53,13 +53,36 @@ class _BottomNavState extends State<BottomNav>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (_selectedIndex != 0) {
-          setState(() {
-            _selectedIndex = 0;
-          });
-          return false;
-        }
-        return true;
+        bool value = false;
+        await showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  title: AppText.regular(
+                      "Are you sure you want to exit this application?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        value = true;
+                        Navigator.pop(context);
+                      },
+                      child: AppText.button("Yes"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        value = false;
+                        Navigator.pop(context);
+                      },
+                      child: AppText.button(
+                        "No",
+                        color: Colors.red,
+                      ),
+                    )
+                  ],
+                )).then((v) {
+          print("Value from dialog $v");
+        });
+        await Future.delayed(const Duration(milliseconds: 300));
+        return value;
       },
       child: Scaffold(
         body: IndexedStack(
