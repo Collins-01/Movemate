@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movemate/presentation/views/components/home_view_appbar_section.dart';
 import 'package:movemate/presentation/views/components/tracking_item_component.dart';
 import 'package:movemate/presentation/views/components/search_field.dart';
 import 'package:movemate/presentation/views/search_view.dart';
@@ -70,7 +71,9 @@ class _HomeViewState extends State<HomeView>
                     top: _appBarAnimation.value,
                     left: 0,
                     right: 0,
-                    child: Opacity(
+                    child: AnimatedOpacity(
+                      duration: AppConfig.animationDuration,
+                      curve: Curves.easeIn,
                       opacity: _animationController.value,
                       child: Container(
                         color: AppColors.primaryColor,
@@ -83,81 +86,7 @@ class _HomeViewState extends State<HomeView>
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: const BoxDecoration(
-                                          // color: Colors.blue,
-                                          image: DecorationImage(
-                                              image: AssetImage(AppAssets.man),
-                                              fit: BoxFit.cover),
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Icon(
-                                                Icons.send,
-                                                size: 11,
-                                                color: Colors.white,
-                                              ),
-                                              const SizedBox(
-                                                width: 4,
-                                              ),
-                                              AppText.medium(
-                                                "Your location",
-                                                color: Colors.white,
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 4,
-                                          ),
-                                          Row(
-                                            children: [
-                                              AppText.regular(
-                                                "Wertheimer, Illinois",
-                                                color: Colors.white,
-                                              ),
-                                              const SizedBox(
-                                                width: 2,
-                                              ),
-                                              const Icon(
-                                                Icons.keyboard_arrow_down,
-                                                color:
-                                                    AppColors.primaryWhiteColor,
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: const BoxDecoration(
-                                          color: AppColors.primaryWhiteColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: const Icon(
-                                            Icons.notifications_none),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                              const HomeViewAppBarSection(),
                               const SizedBox(
                                 height: 20,
                               ),
