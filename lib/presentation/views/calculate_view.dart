@@ -134,21 +134,22 @@ class _CalculateViewState extends State<CalculateView>
                                   child: const Column(
                                     children: [
                                       CalculateTextFieldWidget(
-                                        icon: Icons.unarchive_outlined,
+                                        icon: Icon(Icons.unarchive_outlined),
                                         hintText: "Sender location",
                                       ),
                                       SizedBox(
                                         height: 20,
                                       ),
                                       CalculateTextFieldWidget(
-                                        icon: Icons.archive_outlined,
+                                        icon: Icon(Icons.archive_outlined),
                                         hintText: "Receiver location",
                                       ),
                                       SizedBox(
                                         height: 20,
                                       ),
                                       CalculateTextFieldWidget(
-                                        icon: Icons.hourglass_bottom_outlined,
+                                        icon: Icon(
+                                            Icons.hourglass_bottom_outlined),
                                         hintText: "Approx weight",
                                       ),
                                     ],
@@ -184,11 +185,12 @@ class _CalculateViewState extends State<CalculateView>
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      const CalculateTextFieldWidget(
-                                        icon: Icons.help,
+                                      CalculateTextFieldWidget(
+                                        icon:
+                                            Image.asset(AppAssets.deployedCode),
                                         bgColor: Colors.white,
-                                        suffixIcon:
-                                            Icon(Icons.keyboard_arrow_down),
+                                        suffixIcon: const Icon(
+                                            Icons.keyboard_arrow_down),
                                         hintText: "Box",
                                       ),
                                     ],

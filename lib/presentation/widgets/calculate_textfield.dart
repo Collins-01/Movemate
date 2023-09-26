@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class CalculateTextFieldWidget extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final Color? bgColor;
   final Widget? suffixIcon;
   final String? hintText;
@@ -38,9 +38,7 @@ class CalculateTextFieldWidget extends StatelessWidget {
               const SizedBox(
                 width: 12,
               ),
-              Icon(
-                icon,
-              ),
+              icon,
               const SizedBox(
                 width: 5,
               ),

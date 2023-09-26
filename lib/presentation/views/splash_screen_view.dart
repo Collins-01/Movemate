@@ -18,11 +18,16 @@ class _SplashScreenViewState extends State<SplashScreenView> {
 
   _onInit() async {
     await Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => const BottomNav(),
-        ),
-      );
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (_) => const BottomNav(),
+      //   ),
+      // );
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (_) => const BottomNav(),
+          ),
+          (route) => false);
     });
   }
 
