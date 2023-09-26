@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     AppAssets.preCacheAssets(context);
     return const MaterialApp(
-      home: BottomNav(activeIndex: 0),
+      home: BottomNav(),
       // home: ShipmentHistoryView(),
     );
   }

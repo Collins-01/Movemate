@@ -9,10 +9,8 @@ import 'package:movemate/presentation/widgets/widgets.dart';
 import 'package:movemate/utils/utils.dart';
 
 class BottomNav extends StatefulWidget {
-  final int activeIndex;
   const BottomNav({
     Key? key,
-    required this.activeIndex,
   }) : super(key: key);
 
   @override
@@ -36,9 +34,11 @@ class _BottomNavState extends State<BottomNav>
 
   // List of screens
   final List<Widget> _screens = [
-    const HomeView(), // Replace with your screen widget
-    const CalculateView(), // Replace with your screen widget
-    const ShipmentHistoryView(), // Replace with your screen widget
+    const HomeView(),
+    // const CalculateView(),
+    const SizedBox.shrink(),
+    // const ShipmentHistoryView(),
+    const SizedBox.shrink(),
     SafeArea(
       child: Scaffold(
         body: Center(
@@ -47,20 +47,19 @@ class _BottomNavState extends State<BottomNav>
           ),
         ),
       ),
-    ), // Replace with your screen widget
+    ),
   ];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         if (_selectedIndex != 0) {
-          // If not on index 0, navigate back to index 0
           setState(() {
             _selectedIndex = 0;
           });
-          return false; // Prevent default back navigation
+          return false;
         }
-        return true; // Allow default back navigation
+        return true;
       },
       child: Scaffold(
         body: IndexedStack(
@@ -87,6 +86,43 @@ class _BottomNavState extends State<BottomNav>
                                 setState(() {
                                   _selectedIndex = index;
                                 });
+                              }
+                              if (_selectedIndex == 1) {
+                                await Future.delayed(
+                                  const Duration(milliseconds: 80),
+                                  () {
+                                    Navigator.of(context)
+                                        .push(
+                                      MaterialPageRoute(
+                                        builder: (_) => const CalculateView(),
+                                      ),
+                                    )
+                                        .then((value) {
+                                      setState(() {
+                                        _selectedIndex = 0;
+                                      });
+                                    });
+                                  },
+                                );
+                              }
+                              if (_selectedIndex == 2) {
+                                await Future.delayed(
+                                  const Duration(milliseconds: 160),
+                                  () {
+                                    Navigator.of(context)
+                                        .push(
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            const ShipmentHistoryView(),
+                                      ),
+                                    )
+                                        .then((value) {
+                                      setState(() {
+                                        _selectedIndex = 0;
+                                      });
+                                    });
+                                  },
+                                );
                               }
                             },
                             child: Column(
